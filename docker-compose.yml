@@ -1,0 +1,82 @@
+services:
+  erp-gamers:
+    container_name: erp-gamers
+    image: ghcr.io/erp-cnam/gamers:latest
+    # ports:
+    #   - <host>:<container>
+    env_file: .env
+    volumes:
+      # - <host>:<container>
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
+    depends_on:
+      - erp-connect
+
+  erp-back:
+    container_name: erp-back
+    image: ghcr.io/erp-cnam/back:latest
+    # ports:
+    #   - <host>:<container>
+    env_file: .env
+    volumes:
+      # - <host>:<container>
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
+    depends_on:
+      - erp-connect
+
+  erp-money:
+    container_name: erp-money
+    image: ghcr.io/erp-cnam/money:latest
+    # ports:
+    #   - <host>:<container>
+    env_file: .env
+    volumes:
+      # - <host>:<container>
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
+    depends_on:
+      - erp-connect
+
+  erp-bank:
+    container_name: erp-bank
+    image: ghcr.io/erp-cnam/bank:latest
+    # ports:
+    #   - <host>:<container>
+    env_file: .env
+    volumes:
+      # - <host>:<container>
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
+    depends_on:
+      - erp-connect
+
+  erp-connect:
+    container_name: erp-connect
+    image: ghcr.io/erp-cnam/connect:latest
+    # ports:
+    #   - <host>:<container>
+    env_file: .env
+    volumes:
+      # - <host>:<container>
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
+
+networks:
+  erp:
+    name: erp
