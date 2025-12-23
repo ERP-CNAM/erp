@@ -29,7 +29,10 @@ services:
     networks:
       - erp
     depends_on:
-      - erp-connect
+      erp-connect:
+        condition: service_started
+      erp-back-db:
+        condition: service_healthy
 
   erp-money:
     container_name: erp-money
@@ -77,6 +80,32 @@ services:
     networks:
       - erp
 
+  erp-back-db:
+    container_name: erp-back-db
+    image: postgres:18.1
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${BACK_DATABASE_USER}
+      - POSTGRES_PASSWORD=${BACK_DATABASE_PASSWORD}
+      - POSTGRES_DB=${BACK_DATABASE_DB}
+    volumes:
+      - erp-back-data:/var/lib/postgresql
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${BACK_DATABASE_USER} -d ${BACK_DATABASE_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 networks:
   erp:
     name: erp
+
+volumes:
+  erp-back-data:
