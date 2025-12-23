@@ -69,11 +69,10 @@ services:
   erp-connect:
     container_name: erp-connect
     image: ghcr.io/erp-cnam/connect:latest
-    # ports:
-    #   - <host>:<container>
+    ports:
+      - 8000:8000
     env_file: .env
     volumes:
-      # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
