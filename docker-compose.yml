@@ -61,7 +61,8 @@ services:
     networks:
       - erp
     depends_on:
-      - erp-connect
+      - erp-back
+      - erp-money-db
 
   erp-bank:
     container_name: erp-bank
@@ -116,6 +117,25 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+    
+  erp-money-db:
+    container_name: erp-money-db
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MONEY_DATABASE_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MONEY_DATABASE_DATABASE}
+      - MYSQL_USER=${MONEY_DATABASE_USER}
+      - MYSQL_PASSWORD=${MONEY_DATABASE_PASSWORD}
+    volumes:
+      - erp-money-data:/var/lib/mysql
+      - ./config/money-db-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    networks:
+      - erp
 
 networks:
   erp:
@@ -123,3 +143,4 @@ networks:
 
 volumes:
   erp-back-data:
+  erp-money-data:
