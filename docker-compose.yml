@@ -4,7 +4,6 @@ services:
     image: ghcr.io/erp-cnam/gamers:latest
     # ports:
     #   - <host>:<container>
-    env_file: .env
     volumes:
       # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
@@ -18,9 +17,24 @@ services:
   erp-back:
     container_name: erp-back
     image: ghcr.io/erp-cnam/back:latest
-    # ports:
-    #   - <host>:<container>
-    env_file: .env
+    ports:
+      - 3000:3000
+    environment:
+      - BACK_DATABASE_USER=${BACK_DATABASE_USER}
+      - BACK_DATABASE_PASSWORD=${BACK_DATABASE_PASSWORD}
+      - BACK_DATABASE_DB=${BACK_DATABASE_DB}
+      - BACK_DATABASE_HOST=${BACK_DATABASE_HOST}
+      - NODE_ENV=${BACK_NODE_ENV}
+      - ADMIN_EMAIL=${BACK_ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${BACK_ADMIN_PASSWORD}
+      - ADMIN_FIRSTNAME=${BACK_ADMIN_FIRSTNAME}
+      - ADMIN_LASTNAME=${BACK_ADMIN_LASTNAME}
+      - JWT_SECRET=${CONNECT_JWT_SECRET}
+      - DATABASE_URL=${BACK_DATABASE_URL}
+      - REPOSITORY=${BACK_REPOSITORY}
+      - CONNECT_API_KEY=${CONNECT_API_KEY}
+      - CONNECT_URL=${CONNECT_URL}
+      - DEBUG_ENABLED=${BACK_DEBUG_ENABLED}
     volumes:
       # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
@@ -39,7 +53,6 @@ services:
     image: ghcr.io/erp-cnam/money:latest
     # ports:
     #   - <host>:<container>
-    env_file: .env
     volumes:
       # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
@@ -55,7 +68,6 @@ services:
     image: ghcr.io/erp-cnam/bank:latest
     # ports:
     #   - <host>:<container>
-    env_file: .env
     volumes:
       # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
@@ -71,7 +83,10 @@ services:
     image: ghcr.io/erp-cnam/connect:latest
     ports:
       - 8000:8000
-    env_file: .env
+    environment:
+      - CONNECT_API_KEY=${CONNECT_API_KEY}
+      - CONNECT_JWT_SECRET=${CONNECT_JWT_SECRET}
+      - CONNECT_VERSION=${CONNECT_VERSION}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
