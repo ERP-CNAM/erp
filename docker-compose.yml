@@ -61,8 +61,10 @@ services:
     networks:
       - erp
     depends_on:
-      - erp-back
-      - erp-money-db
+      erp-back:
+        condition: service_started
+      erp-money-db:
+        condition: service_healthy
 
   erp-bank:
     container_name: erp-bank
@@ -142,6 +144,12 @@ services:
     restart: unless-stopped
     networks:
       - erp
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 || exit 1"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
 networks:
   erp:
