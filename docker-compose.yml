@@ -44,7 +44,7 @@ services:
       - erp
     depends_on:
       erp-connect:
-        condition: service_started
+        condition: service_healthy
       erp-back-db:
         condition: service_healthy
 
@@ -94,6 +94,12 @@ services:
     restart: unless-stopped
     networks:
       - erp
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/ping', timeout=2)\""]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
   erp-back-db:
     container_name: erp-back-db
