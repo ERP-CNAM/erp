@@ -2,6 +2,7 @@ services:
   erp-gamers:
     container_name: erp-gamers
     image: ghcr.io/erp-cnam/gamers:latest
+    pull_policy: always
     # ports:
     #   - <host>:<container>
     volumes:
@@ -17,6 +18,7 @@ services:
   erp-back:
     container_name: erp-back
     image: ghcr.io/erp-cnam/back:latest
+    pull_policy: always
     ports:
       - 3000:3000
     environment:
@@ -50,6 +52,7 @@ services:
   erp-money:
     container_name: erp-money
     image: ghcr.io/erp-cnam/money:latest
+    pull_policy: always
     ports:
       - 8080:8080
     volumes:
@@ -67,6 +70,7 @@ services:
   erp-bank:
     container_name: erp-bank
     image: ghcr.io/erp-cnam/bank:latest
+    pull_policy: always
     ports:
       - 3004:3004
     environment:
@@ -89,6 +93,7 @@ services:
   erp-connect:
     container_name: erp-connect
     image: ghcr.io/erp-cnam/connect:latest
+    pull_policy: always
     ports:
       - 8000:8000
     environment:
