@@ -21,6 +21,7 @@ services:
     pull_policy: always
     ports:
       - 3000:3000
+      - 3001:3001
     environment:
       - BACK_DATABASE_USER=${BACK_DATABASE_USER}
       - BACK_DATABASE_PASSWORD=${BACK_DATABASE_PASSWORD}
