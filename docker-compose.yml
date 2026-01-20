@@ -101,6 +101,7 @@ services:
       - CONNECT_JWT_SECRET=${CONNECT_JWT_SECRET}
       - CONNECT_VERSION=${CONNECT_VERSION}
     volumes:
+      - ./connect_logs:/app/logs
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
