@@ -76,13 +76,15 @@ services:
       - 3004:3004
     environment:
       - BANK_PORT=${BANK_PORT}
-      - NODE_ENV=${BANK_NODE_ENV}
+      - BANK_NODE_ENV=${BANK_NODE_ENV}
       - CONNECT_URL=${CONNECT_URL}
       - CONNECT_API_KEY=${CONNECT_API_KEY}
-      - SERVICE_NAME=${BANK_SERVICE_NAME}
-      - SERVICE_VERSION=${BANK_SERVICE_VERSION}
+      - BANK_SERVICE_NAME=${BANK_SERVICE_NAME}
+      - BANK_SERVICE_VERSION=${BANK_SERVICE_VERSION}
       - CONNECT_JWT_SECRET=${CONNECT_JWT_SECRET}
     volumes:
+      - ./bank/public:/erp-bank/public
+      - ./bank/data:/erp-bank/data
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
