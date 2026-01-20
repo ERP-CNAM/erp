@@ -67,17 +67,24 @@ services:
   erp-bank:
     container_name: erp-bank
     image: ghcr.io/erp-cnam/bank:latest
-    # ports:
-    #   - <host>:<container>
+    ports:
+      - 3004:3004
+    environment:
+      - BANK_PORT=${BANK_PORT}
+      - NODE_ENV=${BANK_NODE_ENV}
+      - CONNECT_URL=${CONNECT_URL}
+      - CONNECT_API_KEY=${CONNECT_API_KEY}
+      - SERVICE_NAME=${BANK_SERVICE_NAME}
+      - SERVICE_VERSION=${BANK_SERVICE_VERSION}
+      - CONNECT_JWT_SECRET=${CONNECT_JWT_SECRET}
     volumes:
-      # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
     networks:
       - erp
     depends_on:
-      - erp-connect
+      - erp-back
 
   erp-connect:
     container_name: erp-connect
