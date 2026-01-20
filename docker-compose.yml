@@ -6,7 +6,7 @@ services:
     ports:
       - 80:80
     environment:
-      - API_URL=${GAMERS_API_URL}
+      - API_URL=${CONNECT_URL}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
