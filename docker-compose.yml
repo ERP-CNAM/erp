@@ -3,17 +3,18 @@ services:
     container_name: erp-gamers
     image: ghcr.io/erp-cnam/gamers:latest
     pull_policy: always
-    # ports:
-    #   - <host>:<container>
+    ports:
+      - 80:80
+    environment:
+      - API_URL=${GAMERS_API_URL}
     volumes:
-      # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
     networks:
       - erp
     depends_on:
-      - erp-connect
+      - erp-back
 
   erp-back:
     container_name: erp-back
@@ -38,7 +39,6 @@ services:
       - CONNECT_URL=${CONNECT_URL}
       - DEBUG_ENABLED=${BACK_DEBUG_ENABLED}
     volumes:
-      # - <host>:<container>
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
