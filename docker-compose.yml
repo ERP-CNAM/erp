@@ -112,7 +112,7 @@ services:
       - erp
     healthcheck:
       test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/ping', timeout=2)\""]
-      interval: 2s
+      interval: 10s
       timeout: 5s
       retries: 5
       start_period: 5s
@@ -135,9 +135,9 @@ services:
       - erp
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${BACK_DATABASE_USER} -d ${BACK_DATABASE_DB}"]
-      interval: 2s
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
       start_period: 5s
     
   erp-money-db:
@@ -160,9 +160,9 @@ services:
       - erp
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 || exit 1"]
-      interval: 2s
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
       start_period: 5s
 
 networks:
