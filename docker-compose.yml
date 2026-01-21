@@ -6,7 +6,7 @@ services:
     ports:
       - 80:80
     environment:
-      - API_URL=${CONNECT_URL}
+      - CONNECT_PORT=${CONNECT_PORT}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
