@@ -102,7 +102,9 @@ services:
       - erp
     depends_on:
       erp-back:
-          condition: service_started
+        condition: service_started
+      erp-connect:
+        condition: service_healthy
 
   erp-connect:
     container_name: erp-connect
